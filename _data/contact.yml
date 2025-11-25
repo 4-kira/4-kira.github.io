@@ -2,17 +2,18 @@
 
 - type: github
   icon: "fab fa-github"
-
-- type: twitter
-  icon: "fa-brands fa-x-twitter"
+  url: "https://github.com/dltkdals224"
 
 - type: email
   icon: "fas fa-envelope"
-  noblank: true # open link in current tab
-
-- type: rss
-  icon: "fas fa-rss"
-  noblank: true
+  url: "mailto:23mean23@gmail.com"
+# - type: twitter
+#   icon: "fa-brands fa-x-twitter"
+#
+# - type: rss
+#   icon: "fas fa-rss"
+#   noblank: true
+#
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
