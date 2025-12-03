@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: high maintenance # the main title
 
-tagline: 이상민의 블로그 # it will display as the subtitle
+tagline: Software Engineer # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   이상민의 블로그입니다.
