@@ -14,7 +14,7 @@ tags: [import-order]
 
 ![git diff noise](/assets/img/posts/2024/2nd-quarter/import-order-git-diff.png)
 
-이 불필요한 “노이즈 변경”이 히스토리를 더럽힘
+이 불필요한 노이즈 변경이 히스토리를 더럽힘
 
 <br/>
 

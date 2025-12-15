@@ -107,10 +107,10 @@ person.friends === expert.friends; // true
 ### React에서의 불변성
 
 React에서는 값을 비교할 때, '얕은 비교'를 실행하여 성능 최적화를 이룬다.  
-React에서 중요한 것은 “깊은 복사”가 아니라 변경이 발생한 경로의 참조가 새로워졌는지 여부이다.
+React에서 중요한 것은 깊은 복사가 아니라 변경이 발생한 경로의 참조가 새로워졌는지 여부이다.
 
 React는 상태 업데이트 시 이전 상태와 다음 상태를 Object.is를 통해 참조 동일성으로 비교한다.  
-**이 비교는 값의 “내용”이 아니라 참조가 동일한지 여부를 기준으로 이루어진다**.
+**이 비교는 값의 내용이 아니라 참조가 동일한지 여부를 기준으로 이루어진다**.
 
 #### - 의미
 
@@ -131,7 +131,8 @@ React 애플리케이션의 목표는
 깊은 복사는 불변성을 달성하는 하나의 방법일 수는 있지만, React가 기대하는 불변성의 형태는 아니다.
 
 ```javascript
-import React, { useState } from "react";
+import { useState } from "react";
+
 export default function Counter() {
   const [state, setState] = useState({
     count: 0,
@@ -139,23 +140,22 @@ export default function Counter() {
   console.log("mounted or updated");
   return (
     <div>
-      <p> {state.count} </p>{" "}
+      <p> {state.count} </p>
       <button
         onClick={() => {
           state.count += 1;
           setState(state);
         }}
       >
-        +1{" "}
-      </button>{" "}
+        +1
+      </button>
       <button
         onClick={() =>
           setState((prevState) => ({ count: prevState.count - 1 }))
         }
       >
-        {" "}
-        -1{" "}
-      </button>{" "}
+        -1
+      </button>
     </div>
   );
 }
@@ -164,32 +164,29 @@ export default function Counter() {
 위 코드에서는 상태 값이 변경되었음에도 불구하고 Counter 컴포넌트는 다시 렌더링되지 않는다.  
 이는 state 내부의 값을 직접 변경했지만, React에 전달된 상태 객체의 참조는 이전과 동일하기 때문이다.
 
-React는 상태 업데이트 시 값의 “내용”이 아니라  
-Object.is 기반의 참조 동일성 비교를 통해 의미 있는 변화 여부를 판단한다.
-
 ```javascript
-import React, { useState } from "react";
+import { useState } from "react";
+
 export default function Counter() {
   const [state, setState] = useState({ count: 0 });
   console.log("mounted or updated");
   return (
     <div>
-      {" "}
-      <p>{state.count}</p> <button
+      <p>{state.count}</p>
+      <button
         onClick={() => {
           setState((prevState) => ({ count: prevState.count + 1 }));
         }}
       >
-        {" "}
-        +1{" "}
-      </button> <button
+        +1
+      </button>
+      <button
         onClick={() =>
           setState((prevState) => ({ count: prevState.count - 1 }))
         }
       >
-        {" "}
-        -1{" "}
-      </button>{" "}
+        -1
+      </button>
     </div>
   );
 }
@@ -199,6 +196,6 @@ export default function Counter() {
 이 경우 React는 상태가 변경되었다고 판단하고 컴포넌트를 다시 렌더링한다.
 
 중요한 점은, React가 상태를 비교할 때 깊은 비교를 수행하지 않는다는 사실이다.  
-이 설계는 성능을 위한 선택이며, 그 전제로 개발자가 상태를 불변적으로 다룰 것을 기대한다.
+이 설계는 성능을 위한 선택이며 그 전제로 개발자가 상태를 불변적으로 다룰 것을 기대한다.
 
 즉, 불변성은 React의 렌더링 모델을 성립시키기 위한 계약에 가깝다.
