@@ -1,0 +1,16 @@
+---
+---
+
+@use 'main';
+
+/* Custom styles for image layout */
+.image-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+
+  margin: 1rem 0 !important;
+  width: 100% !important;
+  gap: 1rem !important;
+}
