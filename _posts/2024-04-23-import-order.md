@@ -12,7 +12,7 @@ tags: [import-order]
 "이전 커밋과 현재 코드의 달라진 부분”을 보여주는 기능.  
 파일 수정과 무관한 import 순서만 바뀌어도 diff가 덩어리째 변해 중요하지 않은 부분이 강조됨.
 
-![git diff noise](/assets/img/posts/2024/2nd-quarter/import-order-git-diff.png)
+![git diff noise](/assets/img/posts/2024/import-order-git-diff.png)
 
 이 불필요한 노이즈 변경이 히스토리를 더럽힘
 
