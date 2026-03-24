@@ -1,8 +1,9 @@
-
+---
 title: "fxts 라이브러리 기반 함수형 프로그래밍의 실전적 적용"
 date: 2024-08-05 00:00:00 +0900
 categories: [implementation, react]
 tags: [functional programming, fxts]
+---
 
 
 > [Archive] 이 글은 2024년에 다른 플랫폼에서 작성한 글을 이전한 것입니다.  
