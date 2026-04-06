@@ -1,6 +1,6 @@
 ---
 title: "commit log의 email 변경"
-date: 2025-09-30 00:00:00 +0900
+date: 2024-09-30 00:00:00 +0900
 categories: [implementation, tools]
 tags: [commit]
 ---
