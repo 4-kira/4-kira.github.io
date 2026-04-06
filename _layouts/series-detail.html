@@ -1,0 +1,17 @@
+---
+layout: page
+---
+
+{% assign series_posts = site.posts | where: "series", page.series_name | sort: "series_order" %}
+
+<ul class="list-group">
+  {% for post in series_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>
+        <span class="text-muted small me-2">{{ post.series_order }}.</span>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </span>
+      <span class="text-muted small">{{ post.date | date: "%Y.%m.%d" }}</span>
+    </li>
+  {% endfor %}
+</ul>

@@ -2,7 +2,7 @@
 title: "오즈의 제작소: 무한 스크롤"
 date: 2022-05-18 00:00:00 +0900
 categories: [implementation, react]
-tags: [react, infinite-scroll, SWR, intersection-observer]
+tags: [react, infinite scroll, SWR, intersection observer]
 ---
 
 > [Archive] 이 글은 2022년에 다른 플랫폼에서 작성한 글을 이전하며 재구성한 것입니다.  

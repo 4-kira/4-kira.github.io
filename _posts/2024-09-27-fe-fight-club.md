@@ -1,7 +1,7 @@
 ---
 title: "프론트엔드 파이트 클럽"
 date: 2024-09-27 00:00:00 +0900
-categories: [essay]
+categories: [essay, event]
 tags: [css architecture, package manager]
 ---
 
