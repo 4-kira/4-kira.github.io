@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dltkdals224.github.io/sitemap.xml
+Sitemap: https://4-kira.github.io/sitemap.xml
