@@ -22,11 +22,13 @@ tags: [css architecture, package manager]
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc4zGhk%2FbtsJO1aD3uP%2FAAAAAAAAAAAAAAAAAAAAALrOPP4Yz11ADsyPVo4MNGGFHbc7EQmpl6OgLnnUReJD%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DzHPky3aC7jqNcheRFyt4W7ARWOw%253D)
 
 홍팀 주장
+
 - 일이라고 하는 것은 "문제를 해결하는 것".
 - 커뮤니케이션 능력도 당연히 중요하지만, 문제 해결 능력에 비교할 수는 없다.
 - 커뮤니케이션 능력은 문제 해결 능력을 키우는 것보다는 훨씬 쉽다.
 
 청팀 주장
+
 - 문제는 어떠한 방식으로든 결국 해결된다.
 - 커뮤니케이션 자체도 일이고, 같이 문제를 정의하고 내가 문제 해결사가 되면 된다.
 
@@ -55,21 +57,22 @@ AI의 발전으로 불가능한 문제해결이 거의 존재하지 않게 된 �
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FZtpVO%2FbtsJQnJ0bgK%2FAAAAAAAAAAAAAAAAAAAAAK7CrtmuhwypUUDTaJr89Byn78nyWWH0A7H5Au1hEUvX%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DydLcd1%252F3%252FRNMKDZxXe%252FZaHKDwPw%253D)
 
 홍팀 주장
+
 - CSS-in-JS는 생태계에서 환영받지 못하는 이유들이 존재한다.
 
-> 1) CSS-in-JS는 실제로 런타임에서 성능 문제를 일으킬 수 있다.  
-> ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fdzw8WW%2FbtsJQDlxBda%2FAAAAAAAAAAAAAAAAAAAAAOJO0b864-yzALsKc06m2NctacaQg8RD8nPf3RFN6Wmh%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DurxYwZ5xgCVgYZicpKmzIres6lE%253D)
-> Chakra UI의 경우 @emotion/styled 의존성을 통해 런타임 CSS-in-JS를 사용중인데,  
-> 개발팀은 이러한 CSS-in-JS의 성능 문제를 인지하고 있음을 공식적으로 언급했다.
+> 1. CSS-in-JS는 실제로 런타임에서 성능 문제를 일으킬 수 있다.  
+>    ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fdzw8WW%2FbtsJQDlxBda%2FAAAAAAAAAAAAAAAAAAAAAOJO0b864-yzALsKc06m2NctacaQg8RD8nPf3RFN6Wmh%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DurxYwZ5xgCVgYZicpKmzIres6lE%253D)
+>    Chakra UI의 경우 @emotion/styled 의존성을 통해 런타임 CSS-in-JS를 사용중인데,  
+>    개발팀은 이러한 CSS-in-JS의 성능 문제를 인지하고 있음을 공식적으로 언급했다.
 
-> 2) useInsertionEffect  
-> React는 CSS-in-JS의 런타임 주입 방식을 사용해야 하는 경우 useInsertionEffect를 통한 최적화를 권장한다.  
-> 하지만, 해당 방식이 최적의 해결책은 아니라고 설명한다.
+> 1. useInsertionEffect  
+>    React는 CSS-in-JS의 런타임 주입 방식을 사용해야 하는 경우 useInsertionEffect를 통한 최적화를 권장한다.  
+>    하지만, 해당 방식이 최적의 해결책은 아니라고 설명한다.
 
-> 3) Next.js에서의 CSS-in-JS와 관련한 일부 제약 사항  
-> Next.js 13 이상에서는 React 18의 새로운 streaming rendering 방식을 사용하는데,
-> 이 방식에서는 \<head>가 \<body>보다 먼저 렌더링.
-> 하지만 CSS-in-JS는 일반적으로 <body> 렌더링 후에 스타일을 생성하기 때문에 문제가 발생할 수 있다.
+> 1. Next.js에서의 CSS-in-JS와 관련한 일부 제약 사항  
+>    Next.js 13 이상에서는 React 18의 새로운 streaming rendering 방식을 사용하는데,
+>    이 방식에서는 \<head>가 \<body>보다 먼저 렌더링.
+>    하지만 CSS-in-JS는 일반적으로 <body> 렌더링 후에 스타일을 생성하기 때문에 문제가 발생할 수 있다.
 
 - emotion docs의 확인을 통한 실질적 성능 문제 확인.
 
@@ -78,11 +81,12 @@ AI의 발전으로 불가능한 문제해결이 거의 존재하지 않게 된 �
 > 결과로 pure process가 emotion의 사용보다 최대 6배 가량 빠르다는 것을 확인할 수 있다.
 
 청팀 주장
+
 - tailwind CSS는 추가 라이브러리 사용으로 런타임 오버헤드가 발생할 수 있다.
 
 > ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fch3VCn%2FbtsJQBH5IhS%2FAAAAAAAAAAAAAAAAAAAAAOAymk26WveMmEE29OVBTEQa3Zr6baWcp3W6oD291m1f%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3Dp%252BHziOmsjhsOaVWvDlEiuvLyao0%253D)
 > Tailwind CSS는 "zero runtime"을 표방하지만 실제로는 추가 라이브러리 사용으로 런타임 오버헤드가 발생할 수 있으며, 클래스 이름 결합이나 동적 스타일링을 위해 추가 라이브러리가 필요할 수 있다.
-> 
+>
 > CSS-in-JS는 런타임에 스타일을 생성하지만, 최근 성능 개선으로 부담이 줄어들고 있으며,  
 > JavaScript의 모든 기능을 활용할 수 있어 유연한 스타일링이 가능하다.
 
@@ -96,7 +100,7 @@ AI의 발전으로 불가능한 문제해결이 거의 존재하지 않게 된 �
 #### 생각 정리
 
 CSS와 CSS-in-JS 선택은 상황에 따라 달라질 수 있다.  
-CSS-in-JS가 런타임 성능 이슈를 가질 수 있지만, 동적 스타일링에서는 장점을 보인다.  
+CSS-in-JS가 런타임 성능 이슈를 가질 수 있지만, 동적 스타일링에서는 장점을 보인다.
 
 프로파일러를 통한 성능 측정은 매우 중요한 접근 방식.
 
@@ -112,22 +116,24 @@ CSS-in-JS가 런타임 성능 이슈를 가질 수 있지만, 동적 스타일�
 ### Round 3. 패키지 매니저
 
 홍팀 주장
+
 - yarn은 npm을 대체하기 위해 새로운 방식의 접근을 선택했지만, 제약 사항이 다소 존재한다.
 
 > 2022년 Vercel이 만든 'Turbopack'이라는 번들러가 있는데,  
 > maintainer가 yarn berry에서 지원하게 수정할 생각이 없다고 선언.
-> 
+>
 > 만약 yarn 매니저 기반으로 개발을 진행하다가 이런 상황을 마주하면 어떻게 해결할 것인가?
 
 - yarn PnP의 말도안되는 Zip 파일 형식
 
 > yarn PnP는 각 패키지를 개별 Zip 파일로 저장하며 무결성을 보장하고 수정 여부를 쉽게 알 수 있게 한다.  
 > Zip 파일은 압축된 형태이기 때문에 내용을 직접 보거나 수정하기 어렵다.
-> 
+>
 > pnpm은 content-addressable 저장소를 사용하여 패키지를 관리한다.  
 > 이 방식은 파일 시스템에서 직접 패키지 내용을 볼 수 있게 하여 굉장히 직관적으로 바라볼 수 있다.
 
 청팀 주장
+
 - pnpm은 결국 npm이다. (internet explorer를 업그레이드 해도 결국 explorer일 뿐)
 - yarn은 패키지 매니저를 근본있게 수정하며 잘 설계했다고 생각한다.
 

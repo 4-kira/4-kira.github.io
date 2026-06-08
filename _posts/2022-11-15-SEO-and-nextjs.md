@@ -65,7 +65,7 @@ URL을 평가하여 사용자 검색어와 가장 관련성이 높은 페이지�
 #### - 페이지 속도 개선
 
 배점표에 존재하지 않지만, Google이 SEO 점수 측정에 고려하는 주요 요소 중 하나는 페이지 렌더링 시간.
-[구글 페이지 속도 테스트 도구](https://pagespeed.web.dev/?utm_source=psi&utm_medium=redirect)를 통해 모바일 환경과 데스크톱 환경을 나눠 속도를 수치로 확인할 수 있다.  
+[구글 페이지 속도 테스트 도구](https://pagespeed.web.dev/?utm_source=psi&utm_medium=redirect)를 통해 모바일 환경과 데스크톱 환경을 나눠 속도를 수치로 확인할 수 있다.
 
 ![](/assets/img/posts/2022/after-quarter/pagespeed.png)
 
@@ -85,7 +85,7 @@ URL을 평가하여 사용자 검색어와 가장 관련성이 높은 페이지�
 
 ```html
 <header>, <footer>, <nav>
-<main>, <article>, <section>, <aside> 
+<main>, <article>, <section>, <aside>
 <ul>, <li>
 
 <title>, <h1>, <h2>, <h3>, <h4>, <strong>, <a>
@@ -96,7 +96,7 @@ URL을 평가하여 사용자 검색어와 가장 관련성이 높은 페이지�
 Google SEO 점수 배점표에 명시되어있지 않은 HTML Tag 들이 SEO 점수 측정에 영향을 미칠 수 있다.
 
 ```html
-<meta>
+<meta />
 ```
 
 페이지가 담고 있는 정보가 아닌 웹페이지 자체의 정보를 명시하기 위해 사용되는 HTML 태그.  
@@ -110,12 +110,18 @@ Facebook, KakaoTalk, Slack, Twitter 등의 SNS에서 공유될 때 동작한다.
 OG 태그의 종류는 다양하지만, 다음의 태그들을 주로 사용한다.
 
 ```html
-<meta property="og:title" content="땃쥐 1시간"/>
-<meta property="og:description" content="땃쥐가 1시간동안 먹방을 합니다."/>
-<meta property="og:site_name" content="Youtube"/>
-<meta property="og:type" content="website"/>
-<meta property="og:image" content="https://i.ytimg.com/vi/2IMabIUHnMQ/hqdefault.jpg?s…RhlIFAoQjAP&rs=AOn4CLDxmWtra4xrEZ-VNSu5CckM0tv9Mw"/>
-<meta property="og:url" content="https://www.youtube.com/watch?v=2IMabIUHnMQ&t=65s"/>
+<meta property="og:title" content="땃쥐 1시간" />
+<meta property="og:description" content="땃쥐가 1시간동안 먹방을 합니다." />
+<meta property="og:site_name" content="Youtube" />
+<meta property="og:type" content="website" />
+<meta
+  property="og:image"
+  content="https://i.ytimg.com/vi/2IMabIUHnMQ/hqdefault.jpg?s…RhlIFAoQjAP&rs=AOn4CLDxmWtra4xrEZ-VNSu5CckM0tv9Mw"
+/>
+<meta
+  property="og:url"
+  content="https://www.youtube.com/watch?v=2IMabIUHnMQ&t=65s"
+/>
 ```
 
 #### - robot.txt
@@ -135,19 +141,14 @@ robots.txt를 구성하는 요소는 크게 네 가지인데,
 - Allow: 크롤링을 허용할 경로를 지정한다.
 - Disallow: 크롤링을 제한할 경로를 지정한다.
 - Sitemap: 사이트맵이 위치한 경로의 전체 URL을 지정한다.  
-(https:// 부터 /sitemap.xml 까지의 전체 절대경로)
+  (https:// 부터 /sitemap.xml 까지의 전체 절대경로)
 
 다음은 Google 크롤링 봇에게는 nogooglebot 폴더 하단의 모든 파일에 대해 크롤링을 막고,  
 그 외 모든 크롤링 봇에게는 모든 파일에 대해 크롤링을 허용하는 형식.
 
 ```html
-User-agent: Googlebot
-Disallow: /nogooglebot/
-
-User-agent: *
-Allow: /
-
-Sitemap: http://www.example.com/sitemap.xml
+User-agent: Googlebot Disallow: /nogooglebot/ User-agent: * Allow: / Sitemap:
+http://www.example.com/sitemap.xml
 ```
 
 #### - 페이지, 문서 제어 태그
@@ -156,8 +157,8 @@ Sitemap: http://www.example.com/sitemap.xml
 
 URL 주소만 다른 동일한 페이지에서 동작하며, 대표가 되는 URL을 알려주는 역할을 하는 태그.
 
-https://www.mysite.com/shop  
-https://www.mysite.com/shop?ct=1
+<https://www.mysite.com/shop>  
+<https://www.mysite.com/shop?ct=1>
 
 가령 위의 주소는 URL은 다르지만 모두 동일한 페이지로 연결될 수 있다.  
 검색엔진은 해당 페이지들을 동일한 페이지의 중복으로 간주하여 크롤링 횟수가 적어지는 문제가 발생.
@@ -166,7 +167,7 @@ https://www.mysite.com/shop?ct=1
 
 ```html
 <head>
-   <link rel="canonical" href="https://www.mytest.com/detail">
+  <link rel="canonical" href="https://www.mytest.com/detail" />
 </head>
 ```
 
@@ -213,12 +214,11 @@ Next.js가 서버 역할을 하기 때문에, 'next build'를 거쳐 웹에 Next
 
 #### - Dynamic Meta Tag
 
-Next.js에서는 _document.js 파일에서 meta 태그를 선언하는 방식으로 dynamic SEO를 구현한다.
+Next.js에서는 \_document.js 파일에서 meta 태그를 선언하는 방식으로 dynamic SEO를 구현한다.
 
-_document.js파일은 next로 시작한 프로젝트 내에서 _app.js파일과 함께 각 페이지의 글로벌한 초기화에 관여한다.
+\_document.js파일은 next로 시작한 프로젝트 내에서\_app.js파일과 함께 각 페이지의 글로벌한 초기화에 관여한다.
 
 해당 파일 내에 DefaultSEO를 기본으로 동작시키며, 그 외 dynamic SEO는 SSR을 통해 넘어온 props로 처리한다.
-
 
 ```jsx
 // pages/_document.jsx
@@ -258,7 +258,9 @@ export const DEFAULT_SEO = {
   },
 };
 ```
+
 <!-- {% raw %} -->
+
 ```jsx
 // pages/detail/[id].jsx
 import { NextSeo } from "next-seo";
@@ -275,16 +277,16 @@ const Detail = ({ data }) => {
           images: [{ url: data.image }],
         }}
       />
-      <section>
-        {/* ... */}
-      </section>
+      <section>{/* ... */}</section>
     </>
   );
 };
 
 export default Detail;
 ```
+
 <!-- {% endraw %} -->
+
 ```javascript
 export async function getStaticPaths() {
   return {
@@ -309,7 +311,7 @@ export async function getStaticProps({ params }) {
 
 OG가 동작하는 SNS에서의 상호작용을 통해 SEO가 적용되었는지를 확인.
 
-로컬에서 작업하는 내용에 대해 meta 태그가 적용될 수 있도록,  Ngrok같은 플랫폼을 통해 외부에서 접근할 수 있게 해줘야 한다.  
+로컬에서 작업하는 내용에 대해 meta 태그가 적용될 수 있도록, Ngrok같은 플랫폼을 통해 외부에서 접근할 수 있게 해줘야 한다.  
 (Ngrok는 NAT와 방화벽 뒤의 로컬 서버를 임의의 안전한 터널을 통해 공개 인터넷에 노출될 수 있도록 해주는 플랫폼.)
 
 로컬 클라이언트 서버 구동시키고, 터미널 하나 더 열어서 Ngrok 관련 작업을 시작.

@@ -17,12 +17,12 @@ tags: [javascript, prototype]
 JavaScript는 전통적인 class 기반 객체지향 언어와는 다른 방식의 객체 모델을 채택하고 있다.  
 ES6 이전 class 개념이 존재하지 않았고, 객체와 객체 사이의 연결 관계를 통해 동작을 공유하는 방식을 사용한다.
 
-JavaScript에서 원시 타입을 제외한 대부분의 값은 객체이며, 
+JavaScript에서 원시 타입을 제외한 대부분의 값은 객체이며,
 각 객체는 내부적으로 자신을 생성한 객체를 참조하는 [[Prototype]]이라는 내부 슬롯을 가진다.
 
 ![](https://poiemaweb.com/img/printout_student_obj_from_chrome.png){: width="75%"}
 
-일반적으로 우리가 접근하는 __proto__는 [[Prototype]]에 접근하기 위한 접근자(accessor)이며,  
+일반적으로 우리가 접근하는 **proto**는 [[Prototype]]에 접근하기 위한 접근자(accessor)이며,  
 이 연결을 통해 프로퍼티 탐색이 위임(delegate) 된다.  
 이때 이 연결의 대상이 되는 객체를 흔히 프로토타입 객체라고 부른다.
 
@@ -44,10 +44,10 @@ Person.prototype.sayHello = function () {
 const person = new Person("Lee", "male");
 
 // 핵심 관계들
-Object.getPrototypeOf(person) === Person.prototype;        // ①
+Object.getPrototypeOf(person) === Person.prototype; // ①
 Object.getPrototypeOf(Person.prototype) === Object.prototype; // ④
-Object.getPrototypeOf(Person) === Function.prototype;      // ③
-person.constructor === Person;                             // ②
+Object.getPrototypeOf(Person) === Function.prototype; // ③
+person.constructor === Person; // ②
 ```
 
 프로토타입 기반 객체 모델은 객체를 “복사”하지 않는다.  

@@ -25,7 +25,6 @@ Cafe24 작업에서 자동화에 유용했던 3가지 사례와, 폴더 액션 A
 기본적으로 경로가 바뀌면 적용된 Automator가 풀려버린다.  
 작명의 경우는 그렇지 않다고 들었는데, 나의 경우는 Automator가 해제되었다. 한번에 잘 만들어놓자.
 
- 
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FVGSCu%2FbtsMUN0AGC5%2FAAAAAAAAAAAAAAAAAAAAAJ5ky793KsCXihdvK2pTJVbgziq5tmG3WLUIn8muZ2Xg%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DwZ1nn%252Bmzhs4CQFlJyh84I8z1wSU%253D){: .normal}  
 macOS Tiger (10.4)부터 존재하는 기본 앱 Automator를 실행한다.
 
@@ -34,17 +33,16 @@ macOS Tiger (10.4)부터 존재하는 기본 앱 Automator를 실행한다.
 
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FlkWYN%2FbtsMUsI7gVJ%2FAAAAAAAAAAAAAAAAAAAAADb7VbX93mUAvrxEFW0EsMfGlXZ3CJWprn481UCabXD0%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3D%252B0%252F5Qa60uRldy5cK2FGpFbrHYHE%253D){: .normal}
 
-1) 상단 폴더 선택에서 폴더 액션을 취할 폴더를 선택.
+1. 상단 폴더 선택에서 폴더 액션을 취할 폴더를 선택.
 
-2) 선택된 Finder 항목 가져오기(=Get Selected Finder Items)  
-셸 스크립트 실행(=Run Shell Script)을 추가. (실행 순서에 영향을 주기 때문에 적절히 위치시키기)
+2. 선택된 Finder 항목 가져오기(=Get Selected Finder Items)  
+   셸 스크립트 실행(=Run Shell Script)을 추가. (실행 순서에 영향을 주기 때문에 적절히 위치시키기)
 
-3) 통과 입력(=Pass input)은 인수(=as arguments)로 변경.
+3. 통과 입력(=Pass input)은 인수(=as arguments)로 변경.
 
-4) 후술하는 적절한 변환 스크립트를 입력한 후, 저장 및 종료(그냥 실행 후 이름 저장 아무렇게나 하고 닫으면 된다.)
+4. 후술하는 적절한 변환 스크립트를 입력한 후, 저장 및 종료(그냥 실행 후 이름 저장 아무렇게나 하고 닫으면 된다.)
 
 Spotlight(cmd + space)에서 'folder actions setup'를 입력하여 기록된 폴더 액션들 확인이 가능하다.
-
 
 ## 사용된 실제 코드
 
@@ -108,13 +106,14 @@ for f in "$@"; do
     mv "$tmp_file" "$output_file"
 done
 ```
+
 기본적으로 존재하는 반복 압축 코드를 개선하여 용량을 원하는 기준 근처까지만 압축하며,  
 파일명을 그대로 유지할 수 있는 로직을 추가했다.
 
 ### .webp 확장자로 변환하는 코드
 
 ```
-for f in "$@"; do  
+for f in "$@"; do
     # 원본 파일명 유지 + 변환된 파일을 "다운로드" 폴더에 저장
     output_file="$HOME/Downloads/$(basename "${f%.*}").webp"
 
@@ -137,6 +136,7 @@ done
 (각각 비디오 변환 도구, GIF 최적화 도구)
 
 `brew install ffmpeg gifsicle`
+
 ```
 # 환경 변수 PATH 설정
 export PATH=$PATH:/usr/local/bin:/opt/homebrew/bin
@@ -158,12 +158,12 @@ do
         filename=$(basename "$f")
         dirname=$(dirname "$f")
         output_file="${dirname}/${filename%.*}.gif"
-        
+
         echo "변환 중: $f -> $output_file"
-        
+
         # 디버그 정보 추가
         "$FFMPEG_PATH" -v debug -i "$f" -vf "fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -f gif - | "$GIFSICLE_PATH" --optimize=3 > "$output_file"
-        
+
         # 파일 생성 확인
         if [ -s "$output_file" ]; then
             echo "변환 완료: $output_file"
@@ -175,6 +175,6 @@ do
     fi
 done
 ```
- 
+
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbKvPsI%2FbtsMT9C3bJ8%2FAAAAAAAAAAAAAAAAAAAAAHAy0suYZi6MboUh9eRQdOP-SSdzvv3HtK9dll26RwBt%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3D9Jjl66ZfAQTUH2L67AwC4jPu7og%253D){: .normal}
 모두 적절한 결과를 뱉어냄을 확인할 수 있다.

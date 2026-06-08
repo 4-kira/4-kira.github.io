@@ -34,11 +34,13 @@ json-server는 짧은 시간 내에 REST API를 구축할 수 있도록 해주�
 
 우선 db.json 내 객체에 data를 담을 table을 만들어줘야 한다.  
 "products"를 key값으로 하는 배열을 생성.
+
 ```json
 {
   "products": []
 }
 ```
+
 이제 "products"라는 URI를 통해 실제 백엔드 서버와 통신하듯 동작할 수 있는 상태가 된다.
 
 ![](/assets/img/posts/2022/after-quarter/json-server-1.png)
@@ -50,8 +52,9 @@ POST요청에 대해 data가 정상적으로 저장됨을 확인할 수 있다.
 <br/>
 
 ### 2) 제공 기능
+
 json-server는 단순한 data의 삽입과 호출 외에도 수정, 삭제와 더불어 필터링, 페이지네이션, 정렬 등의 기능을 제공한다.
- 
+
 #### - URI routing
 
 복수형(Plural)과 단수형(Singular)을 분리해 놓았지만, 모두 복수형으로 사용해도 무방하다.  
@@ -86,9 +89,10 @@ GET /products?id=1&id=2
 GET /products?seller.name=ddatjui
 // 2단 depth 탐색
 ```
+
 &와 |연산자 또한 사용할 수 있다.
 
-- _start와 _end
+- \_start와\_end
 
 값의 시작과 끝을 정해 제한할 수 있다. (id를 통한 제한이 아님)
 
@@ -97,7 +101,7 @@ GET /products?_start=20&_end=30
 // 20번째부터 30번째까지(id와 무관)의 데이터
 ```
 
-- _limit
+- \_limit
 
 데이터의 개수를 통해 필터링.
 
@@ -106,15 +110,15 @@ GET /products/_limit=10
 // 불러올 data를 10개로 제한하여 호출
 ```
 
-- _gte, _lte, _ne, _like
+- \_gte,\_lte, \_ne,\_like
 
 데이터의 최댓값, 최솟값, 불일치, 포함을 여부로 필터링.
 
-_gte : 크거나 같다.  
-_lte : 작거나 같다.
+\_gte : 크거나 같다.  
+\_lte : 작거나 같다.
 
-_ne : 일치하지 않는다.   
-_like : 문자를 포함한다.
+\_ne : 일치하지 않는다.  
+\_like : 문자를 포함한다.
 
 ```
 GET /products?id_gte=10&id_lte=20
@@ -136,7 +140,7 @@ GET /products?q=https
 // https라는 text에 대해 full-text searching 시행
 ```
 
-- _embed, _expand
+- \_embed,\_expand
 
 순서대로 자식과 부모의 자원을 탐색하여 필터링.
 
@@ -144,9 +148,9 @@ GET /products?q=https
 
 #### - pagination
 
-_page와 _limit 인자를 통해 페이지네이션을 구현.  
-_page로 몇 번째 data 묶음인지를, _limit을 통해 한 페이지를 구성하는 data의 수를 제한한다.  
-( _limit의 default value는 10. )
+\_page와\_limit 인자를 통해 페이지네이션을 구현.  
+\_page로 몇 번째 data 묶음인지를,\_limit을 통해 한 페이지를 구성하는 data의 수를 제한한다.  
+( \_limit의 default value는 10. )
 
 ```
 GET /products?_page=7
@@ -157,9 +161,9 @@ GET /products?_page=7
  
 #### - sort
 
-_sort와 _order 인자를 통해 정렬을 구현한다.  
-_sort로 정렬을 적용할 key를, _order을 통해 정렬할 방식을 정한다.  
-(_order의 기본 정렬 방식은 오름차순(ascending))
+\_sort와\_order 인자를 통해 정렬을 구현한다.  
+\_sort로 정렬을 적용할 key를,\_order을 통해 정렬할 방식을 정한다.  
+(\_order의 기본 정렬 방식은 오름차순(ascending))
 
 Multiple fields 대한 정렬도 제공.
 
@@ -205,4 +209,4 @@ const confirmDeleteAllCartData = async () => {
 
 (상위 코드는) React-Query를 사용하는 과정 내에서 작성되었다.
 
-보다 더 자세하고 정확한 기능들은 [깃허브](https://github.com/typicode/json-server를 직접 참고.
+보다 더 자세하고 정확한 기능들은 [깃허브](<https://github.com/typicode/json-server를> 직접 참고.

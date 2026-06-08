@@ -5,7 +5,6 @@ categories: [implementation, react]
 tags: [functional programming, fxts]
 ---
 
-
 > [Archive] 이 글은 2024년에 다른 플랫폼에서 작성한 글을 이전한 것입니다.  
 > 내용 중 일부는 현재 기준과 맞지 않을 수 있습니다.
 
@@ -23,13 +22,13 @@ tags: [functional programming, fxts]
 // ❌ 순수하지 않은 함수 (외부 상태 변경)
 let total = 0;
 function add(n: number) {
-  total += n;  // 외부 변수 수정
+  total += n; // 외부 변수 수정
   return total;
 }
 
 // ✅ 순수 함수
 function add(a: number, b: number) {
-  return a + b;  // 입력만으로 출력 결정, 외부 영향 없음
+  return a + b; // 입력만으로 출력 결정, 외부 영향 없음
 }
 ```
 
@@ -40,8 +39,8 @@ function add(a: number, b: number) {
 ```typescript
 // ❌ 부수 효과 있음
 function updateUser(user: User) {
-  user.lastUpdated = new Date();  // 원본 수정
-  saveToDatabase(user);  // 외부 시스템 변경
+  user.lastUpdated = new Date(); // 원본 수정
+  saveToDatabase(user); // 외부 시스템 변경
   return user;
 }
 
@@ -49,7 +48,7 @@ function updateUser(user: User) {
 function updateUser(user: User): User {
   return {
     ...user,
-    lastUpdated: new Date()  // 새 객체 반환
+    lastUpdated: new Date(), // 새 객체 반환
   };
 }
 // 데이터베이스 저장은 별도 함수에서 명시적으로 처리
@@ -65,12 +64,12 @@ const double = (n: number) => n * 2;
 
 // 함수를 인자로 전달
 const numbers = [1, 2, 3];
-numbers.map(double);  // map은 함수를 인자로 받음
+numbers.map(double); // map은 함수를 인자로 받음
 
 // 함수를 반환
 const multiplyBy = (factor: number) => (n: number) => n * factor;
 const triple = multiplyBy(3);
-triple(5);  // 15
+triple(5); // 15
 ```
 
 #### 4. 참조 투명성 (Referential Transparency)
@@ -87,7 +86,7 @@ const result = 5 + 5;
 // ❌ 참조 투명하지 않음
 let counter = 0;
 const increment = () => ++counter;
-const result = increment() + increment();  // 3
+const result = increment() + increment(); // 3
 // increment()를 결과값으로 대체할 수 없음 (매번 다른 값)
 ```
 
@@ -112,9 +111,7 @@ function getAdultNames(users: User[]): string[] {
 
 // 함수형: 무엇을(What) 할지 기술
 const getAdultNames = (users: User[]) =>
-  users
-    .filter(u => u.age >= 20)
-    .map(u => u.name);
+  users.filter((u) => u.age >= 20).map((u) => u.name);
 ```
 
 명령형 코드는 반복문의 인덱스 `i`, 빈 배열 `result`, `push` 같은 구현 세부사항이 드러난다.  
@@ -141,7 +138,7 @@ fxts가 제공하는 핵심 기능들을 통해 함수형 프로그래밍이 실
 작은 함수들을 조합해 복잡한 로직을 만든다. pipe는 함수들을 순차적으로 연결하는 도구다.
 
 ```typescript
-import { pipe, map, filter } from '@fxts/core';
+import { pipe, map, filter } from "@fxts/core";
 
 // 각각의 작은 함수
 const filterAdults = filter((u: User) => u.age >= 20);
@@ -149,11 +146,7 @@ const extractNames = map((u: User) => u.name);
 const toUpperCase = map((name: string) => name.toUpperCase());
 
 // 조합해서 새로운 함수 생성
-const getAdultNamesUpper = pipe(
-  filterAdults,
-  extractNames,
-  toUpperCase
-);
+const getAdultNamesUpper = pipe(filterAdults, extractNames, toUpperCase);
 
 // 재사용
 const result1 = getAdultNamesUpper(users);
@@ -169,7 +162,7 @@ const result2 = getAdultNamesUpper(employees);
 거대한 데이터셋에서 처음 5개만 필요할 때, 전체를 처리하지 않는다.
 
 ```typescript
-import { pipe, map, filter, take, toArray } from '@fxts/core';
+import { pipe, map, filter, take, toArray } from "@fxts/core";
 
 // 100만 개의 데이터가 있다고 가정
 const hugeData = range(1, 1000000);
@@ -177,18 +170,18 @@ const hugeData = range(1, 1000000);
 // ✅ 지연 평가: 5개만 실제로 처리됨
 const result = pipe(
   hugeData,
-  filter(n => n % 2 === 0),
-  map(n => n * n),
-  take(5),  // 여기서 5개가 완성되면 평가 중단
-  toArray
+  filter((n) => n % 2 === 0),
+  map((n) => n * n),
+  take(5), // 여기서 5개가 완성되면 평가 중단
+  toArray,
 );
 
 // ❌ 즉시 평가: 100만 개 전부 처리
 const result = pipe(
   hugeData,
-  filter(n => n % 2 === 0),
-  toArray,  // 전체 필터링
-  arr => arr.slice(0, 5)
+  filter((n) => n % 2 === 0),
+  toArray, // 전체 필터링
+  (arr) => arr.slice(0, 5),
 );
 ```
 
@@ -201,7 +194,7 @@ toArray나 reduce 같은 "종료 연산"을 만나야 비로소 필요한 만큼
 비동기 작업을 동기 코드처럼 작성하면서도 효율적으로 제어할 수 있다.
 
 ```typescript
-import { pipe, toAsync, map, concurrent, toArray } from '@fxts/core';
+import { pipe, toAsync, map, concurrent, toArray } from "@fxts/core";
 
 const fetchUser = async (id: number) => {
   const res = await fetch(`/api/users/${id}`);
@@ -213,8 +206,8 @@ const users = await pipe(
   range(1, 100),
   toAsync,
   map(fetchUser),
-  concurrent(3),  // 동시 실행 수 제어
-  toArray
+  concurrent(3), // 동시 실행 수 제어
+  toArray,
 );
 ```
 
@@ -227,7 +220,7 @@ const users = await pipe(
 함수형 방식으로 에러를 값으로 다룬다. try-catch로 흐름을 끊지 않고 파이프라인을 유지한다.
 
 ```typescript
-import { pipe, toAsync, map, filter, toArray } from '@fxts/core';
+import { pipe, toAsync, map, filter, toArray } from "@fxts/core";
 
 type Result<T> = { ok: true; data: T } | { ok: false; error: Error };
 
@@ -243,13 +236,13 @@ const safeFetch = (id: number) => async (): Promise<Result<User>> => {
 const results = await pipe(
   [1, 2, 3, 4, 5],
   toAsync,
-  map(id => safeFetch(id)()),
-  toArray
+  map((id) => safeFetch(id)()),
+  toArray,
 );
 
 // 성공한 것과 실패한 것을 나눠서 처리
-const successes = results.filter(r => r.ok);
-const failures = results.filter(r => !r.ok);
+const successes = results.filter((r) => r.ok);
+const failures = results.filter((r) => !r.ok);
 ```
 
 에러가 발생해도 전체 파이프라인이 중단되지 않는다.  
@@ -260,20 +253,20 @@ const failures = results.filter(r => !r.ok);
 pipe 대신 fx를 사용하면 객체 메서드 체이닝 스타일로도 작성할 수 있다.
 
 ```typescript
-import { fx, toArray } from '@fxts/core';
+import { fx, toArray } from "@fxts/core";
 
 // pipe 스타일
 const result1 = pipe(
   [1, 2, 3, 4, 5],
-  filter(n => n % 2 === 0),
-  map(n => n * n),
-  toArray
+  filter((n) => n % 2 === 0),
+  map((n) => n * n),
+  toArray,
 );
 
 // 메서드 체이닝 스타일
 const result2 = fx([1, 2, 3, 4, 5])
-  .filter(n => n % 2 === 0)
-  .map(n => n * n)
+  .filter((n) => n % 2 === 0)
+  .map((n) => n * n)
   .toArray();
 ```
 
@@ -292,26 +285,26 @@ const result2 = fx([1, 2, 3, 4, 5])
 같은 로직을 여러 곳에서 쓴다면 `pipe`, 한 번만 쓴다면 `go`를 선택한다.
 
 ```typescript
-import { pipe, go, map, filter } from '@fxts/core';
+import { pipe, go, map, filter } from "@fxts/core";
 
 const users = [
-  { name: 'Alice', age: 25 },
-  { name: 'Bob', age: 17 }
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 17 },
 ];
 
 // pipe: 재사용 가능한 함수 생성
 const getAdultNames = pipe(
   filter((u: User) => u.age >= 20),
-  map(u => u.name)
+  map((u) => u.name),
 );
 const names1 = getAdultNames(users);
-const names2 = getAdultNames(otherUsers);  // 재사용
+const names2 = getAdultNames(otherUsers); // 재사용
 
 // go: 즉시 실행
 const names = go(
   users,
   filter((u: User) => u.age >= 20),
-  map(u => u.name)
+  map((u) => u.name),
 );
 ```
 
@@ -325,7 +318,7 @@ const names = go(
 명령형으로 작성하면 for 루프와 if 문이 뒤섞이지만, 함수형으로 작성하면 각 단계가 명확히 분리된다.
 
 ```typescript
-import { pipe, filter, map, toArray } from '@fxts/core';
+import { pipe, filter, map, toArray } from "@fxts/core";
 
 interface Product {
   id: number;
@@ -338,15 +331,11 @@ interface Product {
 const onlyInStock = filter((p: Product) => p.inStock);
 const toDisplayName = map((p: Product) => ({
   id: p.id,
-  display: `${p.name} ($${p.price})`
+  display: `${p.name} ($${p.price})`,
 }));
 
 // 추상화 수준이 일치하는 조합
-const getProductList = pipe(
-  onlyInStock,
-  toDisplayName,
-  toArray
-);
+const getProductList = pipe(onlyInStock, toDisplayName, toArray);
 
 const products = await fetchProducts();
 const displayList = getProductList(products);
@@ -361,7 +350,7 @@ const displayList = getProductList(products);
 함수형으로 작성하면 "유효하지 않은 필드를 찾아서 에러 메시지로 변환한다"는 의도가 그대로 드러난다.
 
 ```typescript
-import { pipe, filter, map, toArray } from '@fxts/core';
+import { pipe, filter, map, toArray } from "@fxts/core";
 
 interface Field {
   name: string;
@@ -370,20 +359,16 @@ interface Field {
 }
 
 const isInvalid = (f: Field) => f.required && !f.value.trim();
-const toError = (f: Field) => ({ 
-  field: f.name, 
-  message: `${f.name}은(는) 필수입니다` 
+const toError = (f: Field) => ({
+  field: f.name,
+  message: `${f.name}은(는) 필수입니다`,
 });
 
-const validateForm = pipe(
-  filter(isInvalid),
-  map(toError),
-  toArray
-);
+const validateForm = pipe(filter(isInvalid), map(toError), toArray);
 
 const fields = [
-  { name: '이름', value: '', required: true },
-  { name: '이메일', value: 'a@b.com', required: true }
+  { name: "이름", value: "", required: true },
+  { name: "이메일", value: "a@b.com", required: true },
 ];
 
 const errors = validateForm(fields);
@@ -399,7 +384,7 @@ const errors = validateForm(fields);
 순차 실행은 너무 느리다. `concurrent`로 동시 요청 수를 제어해서 둘 다 해결한다.
 
 ```typescript
-import { pipe, toAsync, map, filter, concurrent, toArray } from '@fxts/core';
+import { pipe, toAsync, map, filter, concurrent, toArray } from "@fxts/core";
 
 const fetchUser = async (id: number) => {
   const res = await fetch(`/api/users/${id}`);
@@ -407,7 +392,9 @@ const fetchUser = async (id: number) => {
 };
 
 const enrichUser = async (user: User) => {
-  const detail = await fetch(`/api/users/${user.id}/detail`).then(r => r.json());
+  const detail = await fetch(`/api/users/${user.id}/detail`).then((r) =>
+    r.json(),
+  );
   return { ...user, ...detail };
 };
 
@@ -415,11 +402,11 @@ const enrichUser = async (user: User) => {
 const getActiveUsers = pipe(
   toAsync,
   map(fetchUser),
-  concurrent(3),  // 동시에 3개씩 요청
+  concurrent(3), // 동시에 3개씩 요청
   map(enrichUser),
   concurrent(3),
-  filter(u => u.isActive),
-  toArray
+  filter((u) => u.isActive),
+  toArray,
 );
 
 const userIds = [1, 2, 3, 4, 5];
@@ -435,38 +422,45 @@ React의 `useMemo`와 함수형 파이프라인을 결합하면 재렌더링 최
 명령형으로 작성하면 변환 로직이 컴포넌트 안에 흩어지지만, 함수형은 데이터 흐름이 한눈에 들어온다.
 
 ```tsx
-import { pipe, filter, map, toArray } from '@fxts/core';
-import { useMemo } from 'react';
+import { pipe, filter, map, toArray } from "@fxts/core";
+import { useMemo } from "react";
 
 interface Task {
   id: string;
   title: string;
-  status: 'todo' | 'done';
+  status: "todo" | "done";
   priority: number;
 }
 
 const byStatus = (status: string) => filter((t: Task) => t.status === status);
-const sortByPriority = (tasks: Task[]) => 
+const sortByPriority = (tasks: Task[]) =>
   [...tasks].sort((a, b) => a.priority - b.priority);
 const toViewModel = map((t: Task) => ({
   ...t,
-  display: `[우선순위 ${t.priority}] ${t.title}`
+  display: `[우선순위 ${t.priority}] ${t.title}`,
 }));
 
 function TaskList({ tasks }: { tasks: Task[] }) {
-  const todoTasks = useMemo(() => 
-    pipe(
-      tasks,
-      byStatus('todo'),
-      toArray,
-      sortByPriority,
-      toViewModel,
-      toArray
-    ),
-    [tasks]
+  const todoTasks = useMemo(
+    () =>
+      pipe(
+        tasks,
+        byStatus("todo"),
+        toArray,
+        sortByPriority,
+        toViewModel,
+        toArray,
+      ),
+    [tasks],
   );
 
-  return <div>{todoTasks.map(t => <div key={t.id}>{t.display}</div>)}</div>;
+  return (
+    <div>
+      {todoTasks.map((t) => (
+        <div key={t.id}>{t.display}</div>
+      ))}
+    </div>
+  );
 }
 ```
 
@@ -479,32 +473,38 @@ try-catch는 에러가 발생하면 전체 흐름을 중단시킨다.
 에러를 값으로 다루면 일부 요청이 실패해도 성공한 것들은 정상 처리되는 안정적인 시스템을 만든다.
 
 ```typescript
-import { pipe, toAsync, map, filter, toArray } from '@fxts/core';
+import { pipe, toAsync, map, filter, toArray } from "@fxts/core";
 
 type Result<T> = { ok: true; data: T } | { ok: false; error: Error };
 
-const tryCatch = <T,>(fn: () => Promise<T>) => async (): Promise<Result<T>> => {
-  try {
-    return { ok: true, data: await fn() };
-  } catch (error) {
-    return { ok: false, error: error as Error };
-  }
-};
+const tryCatch =
+  <T>(fn: () => Promise<T>) =>
+  async (): Promise<Result<T>> => {
+    try {
+      return { ok: true, data: await fn() };
+    } catch (error) {
+      return { ok: false, error: error as Error };
+    }
+  };
 
-const isOk = <T,>(r: Result<T>): r is { ok: true; data: T } => r.ok;
-const getData = <T,>(r: Result<T>) => (r.ok ? r.data : null);
+const isOk = <T>(r: Result<T>): r is { ok: true; data: T } => r.ok;
+const getData = <T>(r: Result<T>) => (r.ok ? r.data : null);
 
 const fetchUsers = async (ids: number[]) => {
   const results = await pipe(
     ids,
     toAsync,
-    map(id => tryCatch(() => fetchUser(id))()),
-    toArray
+    map((id) => tryCatch(() => fetchUser(id))()),
+    toArray,
   );
 
   return {
     users: pipe(results, filter(isOk), map(getData), toArray),
-    errors: pipe(results, filter(r => !r.ok), toArray)
+    errors: pipe(
+      results,
+      filter((r) => !r.ok),
+      toArray,
+    ),
   };
 };
 ```
@@ -525,18 +525,13 @@ const fetchUsers = async (ids: number[]) => {
 // ❌ 추상화 수준이 섞임
 pipe(
   data,
-  x => x.filter(item => item.age > 20),  // 구체적
-  mapToViewModel,  // 추상적
-  x => x.slice(0, 10)  // 구체적
+  (x) => x.filter((item) => item.age > 20), // 구체적
+  mapToViewModel, // 추상적
+  (x) => x.slice(0, 10), // 구체적
 );
 
 // ✅ 모든 단계가 동일한 추상화 수준
-pipe(
-  data,
-  filterAdults,
-  mapToViewModel,
-  takeFirst10
-);
+pipe(data, filterAdults, mapToViewModel, takeFirst10);
 ```
 
 익명 함수 대신 이름 있는 함수를 사용해서 각 단계의 의도를 명확히 드러낸다.  
@@ -549,13 +544,16 @@ pipe(
 const process = map((user: User) => ({
   name: user.name.toUpperCase(),
   isAdult: user.age >= 20,
-  display: `${user.name} (${user.age}세)`
+  display: `${user.name} (${user.age}세)`,
 }));
 
 // ✅ 책임 분리
 const normalize = map((u: User) => ({ ...u, name: u.name.toUpperCase() }));
 const addAdultFlag = map((u: User) => ({ ...u, isAdult: u.age >= 20 }));
-const addDisplay = map((u: User) => ({ ...u, display: `${u.name} (${u.age}세)` }));
+const addDisplay = map((u: User) => ({
+  ...u,
+  display: `${u.name} (${u.age}세)`,
+}));
 
 const process = pipe(normalize, addAdultFlag, addDisplay);
 ```
@@ -569,7 +567,7 @@ const process = pipe(normalize, addAdultFlag, addDisplay);
 // ✅ 재사용 로직은 pipe로
 const getActiveUsers = pipe(
   filter((u: User) => u.isActive),
-  toArray
+  toArray,
 );
 const active1 = getActiveUsers(users);
 const active2 = getActiveUsers(admins);
@@ -577,9 +575,9 @@ const active2 = getActiveUsers(admins);
 // ✅ 일회성은 go로
 go(
   users,
-  filter(u => u.age > 20),
-  map(u => u.name),
-  toArray
+  filter((u) => u.age > 20),
+  map((u) => u.name),
+  toArray,
 );
 ```
 
@@ -596,21 +594,11 @@ fxts의 지연 평가는 필요한 만큼만 계산해서 불필요한 연산을
 
 ```typescript
 // ✅ take(5) 덕분에 5개만 처리됨
-pipe(
-  hugeArray,
-  map(expensiveOperation),
-  filter(condition),
-  take(5),
-  toArray
-);
+pipe(hugeArray, map(expensiveOperation), filter(condition), take(5), toArray);
 
 // ❌ 전체를 먼저 처리
-pipe(
-  hugeArray,
-  map(expensiveOperation),
-  filter(condition),
-  toArray,
-  arr => arr.slice(0, 5)
+pipe(hugeArray, map(expensiveOperation), filter(condition), toArray, (arr) =>
+  arr.slice(0, 5),
 );
 ```
 
@@ -623,13 +611,7 @@ pipe(
 
 ```typescript
 // API 호출을 3개씩만 동시 실행
-await pipe(
-  userIds,
-  toAsync,
-  map(fetchUser),
-  concurrent(3),
-  toArray
-);
+await pipe(userIds, toAsync, map(fetchUser), concurrent(3), toArray);
 ```
 
 `Promise.all`처럼 모든 요청을 동시에 보내지 않고, `concurrent(3)`으로 3개씩만 실행해서 과부하를 방지한다.  
