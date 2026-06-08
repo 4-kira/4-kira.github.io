@@ -147,8 +147,8 @@ useEffect(() => {
   setHoneytipList([]);
   setPage(1);
 
-  if (sort === 'id,desc') {
-    setCurrentFilter('최신 순');
+  if (sort === "id,desc") {
+    setCurrentFilter("최신 순");
   }
 }, [step, sort]);
 ```

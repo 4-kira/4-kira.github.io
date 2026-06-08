@@ -17,7 +17,7 @@ Cloudflare 서비스가 중단되는 사태가 발생.
 
 해당 시간의 Reddit에서 참고된 바, 일본 오사카 도쿄 영국도 다운.
 
-Cloudflare는 Anycast로 전 세계에 동일한 IP 프리픽스를 광고한다.  
+Cloudflare는 Anycast로 전 세계에 동일한 IP 프리픽스를 광고한다.
 
 ```
         (Cloudflare Tokyo PoP)
@@ -53,7 +53,7 @@ BGP Advertise |
 
 #### - TLS 종료
 
-사용자가 https://service.com에 접속.  
+사용자가 <https://service.com에> 접속.  
 하지만 실제로는 Cloudflare 엣지에 TLS 세션을 맺고, 엣지가 별도의 연결로 origin에 연결하여 데이터를 전달.
 
 origin 서버는 TLS, 인증서 갱신, Cipher 설정 등을 Cloudflare에 위임하여 운영.
@@ -99,7 +99,7 @@ DNS 레이어와 프록시 레이어가 같이 먹통이 되면, 우회할 수 �
 prompt injection, 대량 계정 생성/스크래핑, API abuse를 엣지에서 막으며  
 다양한 대륙에서 레이턴시를 감소시키기 위해 cloudflare를 사용한다.
 
-그래서 이와 같은 구조를 가지게 되는데,  
+그래서 이와 같은 구조를 가지게 되는데,
 
 `사용자` → `Cloudflare (TLS, 인증, 보안, 캐싱)` → `API Gateway(K8s/Envoy 등)` → `모델 서버`
 

@@ -13,11 +13,13 @@ tags: [commit]
 커밋할 때 사용하는 이메일 주소를 터미널에서 확인하는 명령어는 다음과 같다.
 
 전역 설정 확인
+
 ```
 git config --global user.email
 ```
 
 로컬 설정(특정 repository) 확인
+
 ```
 git config user.email
 ```
@@ -48,33 +50,42 @@ Git의 settings > access > emails에 회사 이메일을 등록해놓지 않았�
 ```
 git rebase -i HEAD~n
 ```
+
 n은 변경하고자 하는 commit의 개수.
 
 전역 commit email을 정상적으로 돌려놓은 마지막 commit을 포함하여 아래로 21개의 commit을 조작한다.  
 commit log가 vim편집기로 열리게 된다. (i: input, w: write, q: quit)  
 log들(여기서는 21개의 row)에 대하여 수정해야 하는 커밋의 pick을 모두 edit으로 수정.
+
 ```
 :%s/pick/emit/g
 ```
+
 해당 명령어로 모든 워딩을 치환할 수 있다.
 
 이어서 순서대로 다음의 명령어를 입력한다.
+
 ```
 git commit --amend --author="{name} <{email}>"
 ```
+
 해당 명령어를 통해 commit message를 수정할 수 있는 파일이 열리게 된다.
 
 이미 '--author'을 통해 목표로 했던 email의 수정은 이뤄졌으므로, ':q'로 파일을 닫은 후 리베이스를 계속 진행.
+
 ```
 git rebase --continue
 ```
+
 이 행위를 원하는 commit의 수정 개수만큼 반복. 🤨  
 각 커밋마다 수동으로 이메일을 변경해야 하므로, 자동화된 방법은 아니다.
 
 모든 커밋을 수정한 후, 원격 저장소에 강제 푸시.
+
 ```
 git push --force
 ```
+
 결과적으로 다음과같이 해결할 수 있게 되었다.
 
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbhG7Zz%2FbtsJSd2fm4z%2FAAAAAAAAAAAAAAAAAAAAAD6pq07JyWy66D3EMDP-_7Eind0sG9ZadJQywmTku4n-%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1769871599%26allow_ip%3D%26allow_referer%3D%26signature%3DNAiNhdDThfxO8NF%252Bjl19qnQyg8E%253D)
@@ -88,8 +99,8 @@ git push --force
 ### - rebase가 진행 중인 상태에서 git rebase로 재접근한 경우
 
 > fatal: It seems that there is already a rebase-merge directory, and I wonder if you are in the middle of another rebase.
-> If that is the case, please try git rebase (--continue | --abort | --skip) 
-> If that is not the case, please rm -fr ".git/rebase-merge" and run me again. 
+> If that is the case, please try git rebase (--continue | --abort | --skip)
+> If that is not the case, please rm -fr ".git/rebase-merge" and run me again.
 > I am stopping in case you still have something valuable there.
 
 Git은 rebase 도중에 .git/rebase-merge 디렉토리를 생성해 현재 진행 상태를 관리하는데,  
@@ -108,6 +119,7 @@ interactive rebase 과정에서 커밋을 수정하다 보면, 흐름을 잊고 
 ```
 git rebase --abort
 ```
+
 이 명령어는 .git/rebase-merge를 제거하고, rebase 시작 이전의 브랜치 상태로 되돌린다.  
 이후 다시 git rebase -i HEAD~n으로 재진입하여 작업.
 
@@ -122,11 +134,12 @@ git rebase --abort
 interactive rebase 과정에서 특정 커밋을 수정하면, 해당 커밋을 기준으로 HEAD를 분리한 상태에서 작업을 진행한다.  
 이 상태에서 어느 브랜치에 push해야 하는지 Git이 알 수 없다.  
 따라서 이 상태에서 push를 하려면, 현재 커밋을 기준으로 새로운 브랜치를 생성한 뒤 push해야 한다.
- 
+
 ```
 git checkout -b new-branch-name
 git push origin new-branch-name
 ```
+
 이렇게 하면 현재 수정된 커밋 히스토리를 새로운 브랜치로 명확히 귀속시킬 수 있고,  
 이후 필요하다면 기존 브랜치에 강제 병합(--force)하거나 브랜치를 교체하는 방식으로 관리할 수 있다.
 
@@ -135,7 +148,7 @@ git push origin new-branch-name
 ### - 터미널에서 GitHub password를 입력했을 때 인증에 실패하는 경우
 
 > remote: Please see
-> https://docs.github.com/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication. fatal: Authentication failed for
+> <https://docs.github.com/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls> for information on currently recommended modes of authentication. fatal: Authentication failed for
 
 이 에러는 HTTPS 방식으로 GitHub 원격 저장소에 접근하면서, 계정 비밀번호를 그대로 입력했을 때 발생한다.
 

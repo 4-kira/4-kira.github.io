@@ -44,8 +44,7 @@ import { debounce, uniqBy, cloneDeep } from "lodash";
 
 export function runLodashLab(input: Array<{ id: number; name: string }>) {
   // 실제 호출을 만들어 번들러가 제거하지 못하도록 고정
-  const debounced = debounce(() => {
-  }, 200);
+  const debounced = debounce(() => {}, 200);
 
   debounced();
 
@@ -70,8 +69,7 @@ import uniqBy from "lodash/uniqBy";
 import cloneDeep from "lodash/cloneDeep";
 
 export function runLodashLab(input: Array<{ id: number; name: string }>) {
-  const debounced = debounce(() => {
-  }, 200);
+  const debounced = debounce(() => {}, 200);
 
   debounced();
 
@@ -103,7 +101,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig({
   plugins: [
     react({
-      babel: true  // babel 플러그인 활성화
+      babel: true // babel 플러그인 활성화
         ? {
             plugins: ["lodash"],
           }
@@ -138,8 +136,7 @@ ESM export/import로 구성되어 번들러가 모듈 그래프를 정적으로 
 import { debounce, uniqBy, cloneDeep } from "lodash-es";
 
 export function runLodashLab(input: Array<{ id: number; name: string }>) {
-  const debounced = debounce(() => {
-  }, 200);
+  const debounced = debounce(() => {}, 200);
 
   debounced();
 

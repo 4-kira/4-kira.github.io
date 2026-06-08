@@ -32,25 +32,24 @@ tags: [import-order]
 ### 3) 일단 마음이 편하다
 
 ```typescript
-import { Something } from '../../shared/Something';
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Button } from '@/components/Button';
-import { useState } from 'react';
+import { Something } from "../../shared/Something";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/Button";
+import { useState } from "react";
 import { COLUMNS } from "../constants/table";
-import { helper } from '../utils/helper';
+import { helper } from "../utils/helper";
 ```
 
 ```typescript
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-import { Something } from '@/shared/Something';
-import { helper } from '@/utils/helper';
+import { Something } from "@/shared/Something";
+import { helper } from "@/utils/helper";
 import { COLUMNS } from "@/constants/table";
 
-import { Button } from '@/components/Button';
-
+import { Button } from "@/components/Button";
 ```
 
 <br/>
@@ -112,19 +111,19 @@ eslint-plugin-simple-import-sort: eslint-plugin-import보다 단순하고 강제
 ```typescript
 // eslint.config.ts
 // ...
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import importPlugin from 'eslint-plugin-import'
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import importPlugin from "eslint-plugin-import";
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
     // ...
     plugins: {
-      'simple-import-sort': simpleImportSort,
-      'import': importPlugin,
+      "simple-import-sort": simpleImportSort,
+      import: importPlugin,
     },
     rules: {
-        "simple-import-sort/imports": [
+      "simple-import-sort/imports": [
         "error",
         {
           groups: [
@@ -181,7 +180,7 @@ export default defineConfig([
       "import/no-duplicates": "error", // import 구문은 중복되지 않음
     },
   },
-])
+]);
 ```
 
 순서를 정하는 규칙에 대해서는 후술한다.
